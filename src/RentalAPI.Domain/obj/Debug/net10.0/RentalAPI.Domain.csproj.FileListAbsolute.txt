@@ -1,0 +1,11 @@
+/home/cohorte6/Descargas/RentalAPI/src/RentalAPI.Domain/bin/Debug/net10.0/RentalAPI.Domain.deps.json
+/home/cohorte6/Descargas/RentalAPI/src/RentalAPI.Domain/bin/Debug/net10.0/RentalAPI.Domain.dll
+/home/cohorte6/Descargas/RentalAPI/src/RentalAPI.Domain/bin/Debug/net10.0/RentalAPI.Domain.pdb
+/home/cohorte6/Descargas/RentalAPI/src/RentalAPI.Domain/obj/Debug/net10.0/RentalAPI.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/cohorte6/Descargas/RentalAPI/src/RentalAPI.Domain/obj/Debug/net10.0/RentalAPI.Domain.AssemblyInfoInputs.cache
+/home/cohorte6/Descargas/RentalAPI/src/RentalAPI.Domain/obj/Debug/net10.0/RentalAPI.Domain.AssemblyInfo.cs
+/home/cohorte6/Descargas/RentalAPI/src/RentalAPI.Domain/obj/Debug/net10.0/RentalAPI.Domain.csproj.CoreCompileInputs.cache
+/home/cohorte6/Descargas/RentalAPI/src/RentalAPI.Domain/obj/Debug/net10.0/RentalAPI.Domain.dll
+/home/cohorte6/Descargas/RentalAPI/src/RentalAPI.Domain/obj/Debug/net10.0/refint/RentalAPI.Domain.dll
+/home/cohorte6/Descargas/RentalAPI/src/RentalAPI.Domain/obj/Debug/net10.0/RentalAPI.Domain.pdb
+/home/cohorte6/Descargas/RentalAPI/src/RentalAPI.Domain/obj/Debug/net10.0/ref/RentalAPI.Domain.dll

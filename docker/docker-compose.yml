@@ -1,0 +1,77 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: rental_postgres
+    environment:
+      POSTGRES_DB: rentaldb
+      POSTGRES_USER: rental
+      POSTGRES_PASSWORD: rental_secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rental -d rentaldb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    container_name: rental_rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbit
+      RABBITMQ_DEFAULT_PASS: rabbit_secret
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: ..
+      dockerfile: src/RentalAPI.Api/Dockerfile
+    container_name: rental_api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__Default: "Host=postgres;Port=5432;Database=rentaldb;Username=rental;Password=rental_secret"
+      RabbitMQ__Host: rabbitmq
+      RabbitMQ__Username: rabbit
+      RabbitMQ__Password: rabbit_secret
+      Jwt__Key: "super-secret-jwt-key-min-32-chars!!"
+      Jwt__Issuer: "RentalAPI"
+      Jwt__Audience: "RentalClient"
+      Jwt__ExpiresInMinutes: "60"
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  worker:
+    build:
+      context: ..
+      dockerfile: src/RentalAPI.Worker/Dockerfile
+    container_name: rental_worker
+    environment:
+      ConnectionStrings__Default: "Host=postgres;Port=5432;Database=rentaldb;Username=rental;Password=rental_secret"
+      RabbitMQ__Host: rabbitmq
+      RabbitMQ__Username: rabbit
+      RabbitMQ__Password: rabbit_secret
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+volumes:
+  pgdata:
