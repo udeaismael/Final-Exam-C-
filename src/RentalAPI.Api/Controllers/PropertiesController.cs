@@ -50,8 +50,29 @@ public class PropertiesController(AppDbContext db) : ControllerBase
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> Get(Guid id)
     {
-        var p = await db.Properties.Include(x => x.Owner)
-            .FirstOrDefaultAsync(x => x.Id == id && x.IsActive);
+        var p = await db.Properties
+            .Where(x => x.Id == id && x.IsActive)
+            .Select(x => new
+            {
+                x.Id,
+                x.Title,
+                x.Description,
+                x.City,
+                x.Address,
+                x.PricePerNight,
+                x.MaxGuests,
+                x.Bedrooms,
+                x.Bathrooms,
+                Owner = new
+                {
+                    x.OwnerId,
+                    x.Owner.FirstName,
+                    x.Owner.LastName,
+                    x.Owner.Email
+                }
+            })
+            .FirstOrDefaultAsync();
+
         return p is null ? NotFound() : Ok(p);
     }
 
