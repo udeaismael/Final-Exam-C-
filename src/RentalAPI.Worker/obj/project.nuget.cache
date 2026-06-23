@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "N+ZFEn/RflU=",
+  "dgSpecHash": "y4Fmt3M8L5w=",
   "success": true,
   "projectFilePath": "/home/cohorte6/Descargas/RentalAPI/src/RentalAPI.Worker/RentalAPI.Worker.csproj",
   "expectedPackageFiles": [
@@ -46,8 +46,7 @@
     "/home/cohorte6/.nuget/packages/rabbitmq.client/7.1.2/rabbitmq.client.7.1.2.nupkg.sha512",
     "/home/cohorte6/.nuget/packages/system.diagnostics.eventlog/10.0.0/system.diagnostics.eventlog.10.0.0.nupkg.sha512",
     "/home/cohorte6/.nuget/packages/system.identitymodel.tokens.jwt/8.9.0/system.identitymodel.tokens.jwt.8.9.0.nupkg.sha512",
-    "/home/cohorte6/.nuget/packages/system.threading.ratelimiting/8.0.0/system.threading.ratelimiting.8.0.0.nupkg.sha512",
-    "/home/cohorte6/.nuget/packages/tesseract/5.2.0/tesseract.5.2.0.nupkg.sha512"
+    "/home/cohorte6/.nuget/packages/system.threading.ratelimiting/8.0.0/system.threading.ratelimiting.8.0.0.nupkg.sha512"
   ],
   "logs": []
 }

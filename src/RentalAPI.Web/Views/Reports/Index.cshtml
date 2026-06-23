@@ -1,0 +1,25 @@
+@{
+    ViewData["Title"] = "Reportes";
+    Layout = "_OwnerLayout";
+}
+
+<h2 class="fw-bold mb-1">Reportes</h2>
+<p class="text-muted mb-4">Exporta el historial de reservas a Excel.</p>
+
+<div class="card card-rentakey p-4" style="max-width: 560px;">
+    <form asp-controller="Reports" asp-action="ExportReservations" method="get">
+        <div class="row g-2 mb-3">
+            <div class="col-6">
+                <label class="form-label small">Desde</label>
+                <input type="date" name="from" class="form-control" />
+            </div>
+            <div class="col-6">
+                <label class="form-label small">Hasta</label>
+                <input type="date" name="to" class="form-control" />
+            </div>
+        </div>
+        <button type="submit" class="btn btn-accent text-white w-100">
+            <i class="fa-solid fa-file-excel me-1"></i>Descargar Excel
+        </button>
+    </form>
+</div>

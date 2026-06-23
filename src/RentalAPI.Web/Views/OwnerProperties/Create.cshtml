@@ -1,0 +1,16 @@
+@model PropertyFormViewModel
+@{
+    ViewData["Title"] = "Nueva Propiedad";
+    Layout = "_OwnerLayout";
+}
+
+<h2 class="fw-bold mb-4">Nueva Propiedad</h2>
+<div class="card card-rentakey p-4" style="max-width: 720px;">
+    <form asp-controller="OwnerProperties" asp-action="Create" method="post">
+        <partial name="_Form" model="Model" />
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

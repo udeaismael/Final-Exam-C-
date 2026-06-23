@@ -1,0 +1,36 @@
+@model WishlistViewModel
+@{ ViewData["Title"] = "Favoritos"; }
+
+<div class="container py-4">
+    <h2 class="fw-bold mb-4"><i class="fa-solid fa-heart text-danger me-2"></i>Mis Favoritos</h2>
+
+    @if (!Model.Items.Any())
+    {
+        <p class="text-muted">No tienes propiedades en tu lista de favoritos.</p>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var item in Model.Items)
+            {
+                <div class="col-sm-6 col-lg-4">
+                    <div class="card card-rentakey h-100">
+                        <div class="property-thumb"><i class="fa-solid fa-house"></i></div>
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Title</h5>
+                            <p class="text-muted mb-2"><i class="fa-solid fa-location-dot me-1"></i>@item.City</p>
+                            <p class="fw-bold text-gradient fs-5">$@item.PricePerNight.ToString("N0") / noche</p>
+                            <div class="d-flex gap-2">
+                                <a class="btn btn-primary text-white flex-fill" asp-controller="Properties" asp-action="Details" asp-route-id="@item.PropertyId">Ver</a>
+                                <form asp-controller="Wishlist" asp-action="Remove" method="post">
+                                    <input type="hidden" name="propertyId" value="@item.PropertyId" />
+                                    <button class="btn btn-outline-danger" type="submit"><i class="fa-solid fa-trash"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

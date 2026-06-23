@@ -73,5 +73,18 @@ services:
       rabbitmq:
         condition: service_healthy
 
+  web:
+    build:
+      context: ..
+      dockerfile: src/RentalAPI.Web/Dockerfile
+    container_name: rental_web
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ApiSettings__BaseUrl: "http://api:8080"
+    ports:
+      - "8081:8081"
+    depends_on:
+      - api      
+
 volumes:
   pgdata:

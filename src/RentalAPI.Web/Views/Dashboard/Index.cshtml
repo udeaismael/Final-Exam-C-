@@ -1,0 +1,107 @@
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Panel Propietario";
+    Layout = "_OwnerLayout";
+}
+
+<h2 class="fw-bold mb-1">Panel del Propietario</h2>
+<p class="text-muted mb-4">Resumen de tus propiedades y desempeño.</p>
+
+@if (Model.HasLimitedData)
+{
+    <div class="alert alert-info small">
+        <i class="fa-solid fa-circle-info me-1"></i>
+        Reservas, Ingresos y Ocupación quedan en 0 hasta que la API exponga un endpoint agregado por propietario.
+        La estructura ya está lista para conectarse en cuanto exista.
+    </div>
+}
+
+<div class="row g-3 mb-4">
+    <div class="col-sm-6 col-lg-3">
+        <div class="card kpi-card bg-income p-3 h-100">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <p class="mb-1 opacity-75 small">Ingresos</p>
+                    <h3 class="fw-bold mb-0">$@Model.TotalIncome.ToString("N0")</h3>
+                </div>
+                <i class="fa-solid fa-sack-dollar fa-2x opacity-75"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <div class="card kpi-card bg-occupancy p-3 h-100">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <p class="mb-1 opacity-75 small">Ocupación</p>
+                    <h3 class="fw-bold mb-0">@Model.OccupancyRate.ToString("N0")%</h3>
+                </div>
+                <i class="fa-solid fa-chart-pie fa-2x opacity-75"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <div class="card kpi-card bg-reservations p-3 h-100">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <p class="mb-1 opacity-75 small">Reservas</p>
+                    <h3 class="fw-bold mb-0">@Model.TotalReservations</h3>
+                </div>
+                <i class="fa-solid fa-calendar-check fa-2x opacity-75"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <div class="card kpi-card bg-profitability p-3 h-100">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <p class="mb-1 opacity-75 small">Rentabilidad (precio prom./noche)</p>
+                    <h3 class="fw-bold mb-0">$@Model.AveragePricePerNight.ToString("N0")</h3>
+                </div>
+                <i class="fa-solid fa-chart-line fa-2x opacity-75"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="card card-rentakey p-3">
+            <h6 class="fw-bold mb-3">Precio por noche por propiedad</h6>
+            <canvas id="priceChart" height="220"></canvas>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="card card-rentakey p-3">
+            <h6 class="fw-bold mb-3">Propiedades por ciudad</h6>
+            <canvas id="cityChart" height="220"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="text-end mt-4">
+    <a class="btn btn-primary text-white" asp-controller="OwnerProperties" asp-action="Index">
+        <i class="fa-solid fa-house me-1"></i>Gestionar propiedades
+    </a>
+</div>
+
+@section Scripts {
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script>
+    const labels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.PropertyLabels));
+    const prices = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.PropertyPrices));
+    const cityLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.PropertiesByCity.Keys));
+    const cityValues = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.PropertiesByCity.Values));
+
+    new Chart(document.getElementById('priceChart'), {
+        type: 'bar',
+        data: { labels, datasets: [{ label: 'Precio/noche (USD)', data: prices, backgroundColor: '#4F46E5', borderRadius: 6 }] },
+        options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+    });
+
+    new Chart(document.getElementById('cityChart'), {
+        type: 'doughnut',
+        data: { labels: cityLabels, datasets: [{ data: cityValues, backgroundColor: ['#4F46E5','#7C3AED','#EC4899','#06B6D4','#10B981','#F59E0B'] }] },
+        options: { plugins: { legend: { position: 'bottom' } } }
+    });
+</script>
+}

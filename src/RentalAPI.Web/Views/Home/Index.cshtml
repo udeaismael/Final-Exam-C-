@@ -1,0 +1,45 @@
+@model PropertySearchViewModel
+@{ ViewData["Title"] = "Inicio"; }
+
+<section class="py-5 text-white" style="background: var(--rk-grad-primary);">
+    <div class="container py-4">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <h1 class="fw-bold display-5">Encuentra tu próxima estadía con verificación inteligente</h1>
+                <p class="lead opacity-90">Propiedades verificadas, reservas seguras y validación de identidad con IA.</p>
+                <form asp-controller="Properties" asp-action="Index" method="get" class="d-flex gap-2 mt-4 flex-wrap">
+                    <input type="text" name="city" class="form-control" placeholder="¿A qué ciudad viajas?" style="max-width:280px;" />
+                    <button class="btn btn-light fw-semibold" type="submit"><i class="fa-solid fa-magnifying-glass me-1"></i>Buscar</button>
+                </form>
+            </div>
+            <div class="col-lg-5 text-center d-none d-lg-block">
+                <img src="~/images/logo.png" alt="RentaKey" style="max-height: 260px;" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5">
+    <h3 class="fw-bold mb-4">Propiedades destacadas</h3>
+    <div class="row g-4">
+        @foreach (var p in Model.Results)
+        {
+            <div class="col-sm-6 col-lg-4">
+                <div class="card card-rentakey h-100">
+                    <div class="property-thumb"><i class="fa-solid fa-house"></i></div>
+                    <div class="card-body">
+                        <h5 class="card-title">@p.Title</h5>
+                        <p class="text-muted mb-1"><i class="fa-solid fa-location-dot me-1"></i>@p.City</p>
+                        <p class="mb-2"><i class="fa-solid fa-bed me-1"></i>@p.Bedrooms · <i class="fa-solid fa-bath me-1"></i>@p.Bathrooms · <i class="fa-solid fa-user-group me-1"></i>@p.MaxGuests</p>
+                        <p class="fw-bold text-gradient fs-5">$@p.PricePerNight.ToString("N0") / noche</p>
+                        <a class="btn btn-primary text-white w-100" asp-controller="Properties" asp-action="Details" asp-route-id="@p.Id">Ver detalle</a>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (!Model.Results.Any())
+        {
+            <p class="text-muted">Aún no hay propiedades publicadas.</p>
+        }
+    </div>
+</section>

@@ -1,0 +1,31 @@
+@model LoginViewModel
+@{ ViewData["Title"] = "Iniciar sesión"; }
+
+<div class="container py-5" style="max-width: 480px;">
+    <div class="text-center mb-4">
+        <img src="~/images/logo.png" height="64" alt="RentaKey" />
+        <h3 class="fw-bold mt-2">Inicia sesión</h3>
+    </div>
+    <div class="card card-rentakey p-4">
+        <form asp-controller="Account" asp-action="Login" method="post">
+            <input type="hidden" asp-for="ReturnUrl" />
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger small"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger small"></span>
+            </div>
+            <button type="submit" class="btn btn-primary text-white w-100">Entrar</button>
+        </form>
+        <p class="text-center mt-3 mb-0 small">¿No tienes cuenta? <a asp-controller="Account" asp-action="Register">Regístrate</a></p>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

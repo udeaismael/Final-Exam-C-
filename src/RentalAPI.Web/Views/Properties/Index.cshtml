@@ -1,0 +1,45 @@
+@model PropertySearchViewModel
+@{ ViewData["Title"] = "Propiedades"; }
+
+<div class="container py-4">
+    <h2 class="fw-bold mb-4">Explora propiedades</h2>
+    <form asp-controller="Properties" asp-action="Index" method="get" class="row g-2 mb-4 align-items-end card-rentakey p-3">
+        <div class="col-md-4">
+            <label class="form-label small">Ciudad</label>
+            <input type="text" name="city" value="@Model.City" class="form-control" placeholder="Ej. Cartagena" />
+        </div>
+        <div class="col-md-3">
+            <label class="form-label small">Check-in</label>
+            <input type="date" name="checkIn" value="@Model.CheckIn?.ToString("yyyy-MM-dd")" class="form-control" />
+        </div>
+        <div class="col-md-3">
+            <label class="form-label small">Check-out</label>
+            <input type="date" name="checkOut" value="@Model.CheckOut?.ToString("yyyy-MM-dd")" class="form-control" />
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-primary text-white w-100" type="submit"><i class="fa-solid fa-magnifying-glass me-1"></i>Buscar</button>
+        </div>
+    </form>
+
+    <div class="row g-4">
+        @foreach (var p in Model.Results)
+        {
+            <div class="col-sm-6 col-lg-4">
+                <div class="card card-rentakey h-100">
+                    <div class="property-thumb"><i class="fa-solid fa-house"></i></div>
+                    <div class="card-body">
+                        <h5 class="card-title">@p.Title</h5>
+                        <p class="text-muted mb-1"><i class="fa-solid fa-location-dot me-1"></i>@p.City</p>
+                        <p class="mb-2 small"><i class="fa-solid fa-bed me-1"></i>@p.Bedrooms · <i class="fa-solid fa-bath me-1"></i>@p.Bathrooms · <i class="fa-solid fa-user-group me-1"></i>@p.MaxGuests</p>
+                        <p class="fw-bold text-gradient fs-5">$@p.PricePerNight.ToString("N0") / noche</p>
+                        <a class="btn btn-primary text-white w-100" asp-controller="Properties" asp-action="Details" asp-route-id="@p.Id">Ver detalle</a>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (!Model.Results.Any())
+        {
+            <div class="col-12"><p class="text-muted">No se encontraron propiedades con esos criterios.</p></div>
+        }
+    </div>
+</div>

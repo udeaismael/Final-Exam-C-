@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "MwhBcWWOIzg=",
+  "dgSpecHash": "tVgbKJ2jDHY=",
   "success": true,
   "projectFilePath": "/home/cohorte6/Descargas/RentalAPI/src/RentalAPI.Infrastructure/RentalAPI.Infrastructure.csproj",
   "expectedPackageFiles": [
@@ -58,8 +58,7 @@
     "/home/cohorte6/.nuget/packages/system.security.cryptography.xml/9.0.0/system.security.cryptography.xml.9.0.0.nupkg.sha512",
     "/home/cohorte6/.nuget/packages/system.security.permissions/9.0.0/system.security.permissions.9.0.0.nupkg.sha512",
     "/home/cohorte6/.nuget/packages/system.threading.ratelimiting/8.0.0/system.threading.ratelimiting.8.0.0.nupkg.sha512",
-    "/home/cohorte6/.nuget/packages/system.windows.extensions/9.0.0/system.windows.extensions.9.0.0.nupkg.sha512",
-    "/home/cohorte6/.nuget/packages/tesseract/5.2.0/tesseract.5.2.0.nupkg.sha512"
+    "/home/cohorte6/.nuget/packages/system.windows.extensions/9.0.0/system.windows.extensions.9.0.0.nupkg.sha512"
   ],
   "logs": [
     {

@@ -1,0 +1,39 @@
+@model PropertyDto
+@{ ViewData["Title"] = Model.Title; }
+
+<div class="container py-4">
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="property-thumb mb-3" style="height:340px; font-size:4rem;"><i class="fa-solid fa-house"></i></div>
+            <h2 class="fw-bold">@Model.Title</h2>
+            <p class="text-muted"><i class="fa-solid fa-location-dot me-1"></i>@Model.Address, @Model.City</p>
+            <div class="d-flex gap-4 my-3">
+                <span><i class="fa-solid fa-bed me-1 text-primary"></i>@Model.Bedrooms hab.</span>
+                <span><i class="fa-solid fa-bath me-1 text-primary"></i>@Model.Bathrooms baños</span>
+                <span><i class="fa-solid fa-user-group me-1 text-primary"></i>@Model.MaxGuests huéspedes</span>
+            </div>
+            <p>@Model.Description</p>
+        </div>
+        <div class="col-lg-4">
+            <div class="card card-rentakey p-4 sticky-top" style="top: 90px;">
+                <p class="fw-bold fs-3 text-gradient mb-1">$@Model.PricePerNight.ToString("N0")<span class="fs-6 text-muted"> / noche</span></p>
+                <p class="small text-muted mb-3"><i class="fa-solid fa-clock me-1"></i>Check-in 14:00 · Check-out 12:00</p>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <a class="btn btn-primary text-white w-100 mb-2" asp-controller="Reservations" asp-action="Create" asp-route-propertyId="@Model.Id">
+                        <i class="fa-solid fa-calendar-check me-1"></i>Reservar ahora
+                    </a>
+                    <form asp-controller="Properties" asp-action="ToggleWishlist" method="post">
+                        <input type="hidden" name="propertyId" value="@Model.Id" />
+                        <input type="hidden" name="isInWishlist" value="false" />
+                        <button class="btn btn-outline-secondary w-100" type="submit"><i class="fa-regular fa-heart me-1"></i>Agregar a favoritos</button>
+                    </form>
+                }
+                else
+                {
+                    <a class="btn btn-primary text-white w-100" asp-controller="Account" asp-action="Login">Inicia sesión para reservar</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>

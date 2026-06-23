@@ -1,0 +1,39 @@
+@model MyReservationsViewModel
+@{ ViewData["Title"] = "Mis Reservas"; }
+
+<div class="container py-4">
+    <h2 class="fw-bold mb-4">Mis Reservas</h2>
+
+    @if (!Model.Reservations.Any())
+    {
+        <p class="text-muted">Aún no tienes reservas. <a asp-controller="Properties" asp-action="Index">Explora propiedades</a>.</p>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle bg-white card-rentakey">
+                <thead>
+                    <tr>
+                        <th>Propiedad</th>
+                        <th>Check-in</th>
+                        <th>Check-out</th>
+                        <th>Total</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var r in Model.Reservations)
+                    {
+                        <tr>
+                            <td>@(r.Property?.Title ?? "—")</td>
+                            <td>@r.CheckIn.ToString("dd/MM/yyyy") <span class="text-muted small">14:00</span></td>
+                            <td>@r.CheckOut.ToString("dd/MM/yyyy") <span class="text-muted small">12:00</span></td>
+                            <td class="fw-semibold">$@r.TotalPrice.ToString("N0")</td>
+                            <td><span class="badge badge-status-@r.Status.ToLower()">@r.Status</span></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

@@ -1,0 +1,26 @@
+@model KycViewModel
+
+@switch (Model.Status)
+{
+    case "Pending":
+        <div class="alert alert-warning d-flex align-items-center">
+            <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+            <div><strong>Procesando…</strong> Estamos validando tu documento con IA. Esto puede tardar unos segundos.</div>
+        </div>
+        break;
+    case "Approved":
+        <div class="alert alert-success">
+            <i class="fa-solid fa-circle-check me-2"></i><strong>Aprobado</strong> · Confianza: <span class="badge bg-success">@Model.ConfidenceLevel</span>
+            <div class="small text-muted mt-1">Procesado el @Model.ProcessedAt?.ToString("dd/MM/yyyy HH:mm")</div>
+        </div>
+        break;
+    case "Rejected":
+        <div class="alert alert-danger">
+            <i class="fa-solid fa-circle-xmark me-2"></i><strong>Rechazado</strong>
+            <div class="small mt-1">@(Model.RejectionReason ?? "No fue posible validar el documento.")</div>
+        </div>
+        break;
+    default:
+        <div class="alert alert-secondary"><i class="fa-solid fa-circle-info me-2"></i>Aún no has enviado tu documento de verificación.</div>
+        break;
+}

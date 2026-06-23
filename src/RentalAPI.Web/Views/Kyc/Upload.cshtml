@@ -1,0 +1,40 @@
+@model KycViewModel
+@{ ViewData["Title"] = "Verificación KYC"; }
+
+<div class="container py-4" style="max-width: 620px;">
+    <h2 class="fw-bold mb-1"><i class="fa-solid fa-id-card text-primary me-2"></i>Verificación de identidad</h2>
+    <p class="text-muted mb-4">Sube una foto clara de tu cédula para verificar tu identidad antes de reservar.</p>
+
+    <div class="card card-rentakey p-4">
+        <div id="kyc-status-box" class="mb-3">
+            @await Html.PartialAsync("_KycStatus", Model)
+        </div>
+
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+        <form asp-controller="Kyc" asp-action="Upload" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label class="form-label">Foto de la cédula (JPEG, PNG o WebP, máx. 10MB)</label>
+                <input type="file" name="file" accept="image/jpeg,image/png,image/webp" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-primary text-white w-100"><i class="fa-solid fa-upload me-1"></i>Subir documento</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    @if (Model.Status == "Pending")
+    {
+        <text>
+        const poll = setInterval(async () => {
+            const res = await fetch('@Url.Action("StatusJson", "Kyc")');
+            const data = await res.json();
+            if (data.status !== 'Pending') {
+                clearInterval(poll);
+                location.reload();
+            }
+        }, 4000);
+        </text>
+    }
+</script>
+}

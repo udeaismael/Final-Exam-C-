@@ -1,0 +1,26 @@
+@model CreateReservationViewModel
+@{ ViewData["Title"] = "Reservar"; }
+
+<div class="container py-4" style="max-width: 560px;">
+    <h2 class="fw-bold mb-1">@Model.PropertyTitle</h2>
+    <p class="text-muted mb-4">$@Model.PricePerNight.ToString("N0") / noche</p>
+
+    <div class="card card-rentakey p-4">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+        <div class="alert alert-info small"><i class="fa-solid fa-circle-info me-1"></i>Check-in 14:00 · Check-out 12:00 (horario fijo).</div>
+        <form asp-controller="Reservations" asp-action="Create" method="post">
+            <input type="hidden" asp-for="PropertyId" />
+            <input type="hidden" asp-for="PropertyTitle" />
+            <input type="hidden" asp-for="PricePerNight" />
+            <div class="mb-3">
+                <label asp-for="CheckIn" class="form-label"></label>
+                <input asp-for="CheckIn" type="date" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="CheckOut" class="form-label"></label>
+                <input asp-for="CheckOut" type="date" class="form-control" />
+            </div>
+            <button class="btn btn-primary text-white w-100" type="submit"><i class="fa-solid fa-calendar-check me-1"></i>Confirmar reserva</button>
+        </form>
+    </div>
+</div>

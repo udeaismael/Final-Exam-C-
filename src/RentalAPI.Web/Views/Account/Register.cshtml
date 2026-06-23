@@ -1,0 +1,49 @@
+@model RegisterViewModel
+@{ ViewData["Title"] = "Registro"; }
+
+<div class="container py-5" style="max-width: 520px;">
+    <div class="text-center mb-4">
+        <img src="~/images/logo.png" height="64" alt="RentaKey" />
+        <h3 class="fw-bold mt-2">Crea tu cuenta</h3>
+    </div>
+    <div class="card card-rentakey p-4">
+        <form asp-controller="Account" asp-action="Register" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="FirstName" class="form-label"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="LastName" class="form-label"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger small"></span>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger small"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger small"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Role" class="form-label"></label>
+                <select asp-for="Role" class="form-select">
+                    <option value="User">Huésped (User)</option>
+                    <option value="Owner">Propietario (Owner)</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary text-white w-100">Crear cuenta</button>
+        </form>
+        <p class="text-center mt-3 mb-0 small">¿Ya tienes cuenta? <a asp-controller="Account" asp-action="Login">Inicia sesión</a></p>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
